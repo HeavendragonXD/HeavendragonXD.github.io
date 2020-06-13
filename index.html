@@ -1,48 +1,165 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-canvas {
-    border:1px solid #fff;
-    background-color: #f1f1f1;
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;}
+
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
 }
 </style>
 </head>
-<body onload="startGame()">
+<body>
+
+<div class="slideshow-container">
+
+<div class="mySlides fade">
+  <div class="numbertext">1 / 3</div>
+  <img src="https://images.rbxcdn.com/d66ae37d46e00a1ecacfe9531986690a.jpg" style="width:100%">
+  <div class="text">Welcome to the game</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">2 / 3</div>
+  <img src="https://media.giphy.com/media/cw6sEfH7CRV8k/200_d.gif" style="width:100%">
+  <div class="text">What will happen?</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">3 / 3</div>
+  <img src="data:image/jpeg;base64,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" style="width:100%">
+  <div class="text">... if you find THE button?</div>
+</div>
+
+<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+</div>
+
 <script>
+var slideIndex = 1;
+showSlides(slideIndex);
 
-var myGamePiece;
-var myGamePiece2;
-
-function startGame() {
-    myGameArea.start();
-    myGamePiece = new component(100, 100, "brown", 0, 170);
+function plusSlides(n) {
+  showSlides(slideIndex += n);
 }
 
-var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-    }
+function currentSlide(n) {
+  showSlides(slideIndex = n);
 }
 
-function component(width, height, color, x, y) {
-    this.width = width;
-    this.height = height;
-    this.x = x;
-    this.y = y;    
-    ctx = myGameArea.context;
-    ctx.fillStyle = color;
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
 }
-
 </script>
 
-<p>We have added a component to our game, a red square!</p>
-
 </body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: rgba(0, 4, 255, 0.555)!important;">
+      <a class="navbar-brand" href="file:///Users/georgeli/Documents/Projects/index.html">Start Game</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 </html>
